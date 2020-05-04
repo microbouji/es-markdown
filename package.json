@@ -2,6 +2,7 @@
   "name": "es-markdown",
   "version": "0.1.0",
   "description": "An esm version of the `markdown` package",
+  "module": "index.js",
   "author": "Elian Ibaj <elianibaj@gmail.com>",
   "license": "MIT"
 }
