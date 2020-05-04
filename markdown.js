@@ -5,7 +5,7 @@
 
 /*jshint browser:true, devel:true */
 
-(function( expose ) {
+const markdown = {}
 
   /**
    *  class Markdown
@@ -34,7 +34,7 @@
    *
    *  [JsonML]: http://jsonml.org/ "JSON Markup Language"
    **/
-  var Markdown = expose.Markdown = function(dialect) {
+  var Markdown = markdown.Markdown = function(dialect) {
     switch (typeof dialect) {
       case "undefined":
         this.dialect = Markdown.dialects.Gruber;
@@ -63,7 +63,7 @@
    *
    *  Parse `markdown` and return a markdown document as a Markdown.JsonML tree.
    **/
-  expose.parse = function( source, dialect ) {
+  markdown.parse = function( source, dialect ) {
     // dialect will default if undefined
     var md = new Markdown( dialect );
     return md.toTree( source );
@@ -78,10 +78,10 @@
    *  Take markdown (either as a string or as a JsonML tree) and run it through
    *  [[toHTMLTree]] then turn it into a well-formated HTML fragment.
    **/
-  expose.toHTML = function toHTML( source , dialect , options ) {
-    var input = expose.toHTMLTree( source , dialect , options );
+  markdown.toHTML = function toHTML( source , dialect , options ) {
+    var input = markdown.toHTMLTree( source , dialect , options );
   
-    return expose.renderJsonML( input );
+    return markdown.renderJsonML( input );
   };
   
   /**
@@ -95,7 +95,7 @@
    *  to this function, it is first parsed into a markdown tree by calling
    *  [[parse]].
    **/
-  expose.toHTMLTree = function toHTMLTree( input, dialect , options ) {
+  markdown.toHTMLTree = function toHTMLTree( input, dialect , options ) {
     // convert string input to an MD tree
     if ( typeof input ==="string" ) input = this.parse( input, dialect );
   
@@ -1484,7 +1484,7 @@
    *    output, or just its children. The default `false` is to not include the
    *    root itself.
    */
-  expose.renderJsonML = function( jsonml, options ) {
+  markdown.renderJsonML = function( jsonml, options ) {
     options = options || {};
     // include the root element in the rendered output?
     options.root = options.root || false;
@@ -1713,13 +1713,6 @@
       }
     }
   }
-  
-  } )( (function() {
-    if ( typeof exports === "undefined" ) {
-      window.markdown = {};
-      return window.markdown;
-    }
-    else {
-      return exports;
-    }
-  } )() );
+
+export { markdown };
+export const { toHTML: parse } = markdown;
